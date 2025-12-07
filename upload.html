@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Upload - ShopEasy</title>
+    <title>Admin Panel - ShopEasy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -37,7 +37,7 @@
 
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 800px;
             background: white;
             border-radius: 15px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
@@ -50,7 +50,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Header - Matching Homepage Style */
+        /* Header */
         .header {
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
@@ -72,19 +72,6 @@
         .header p {
             opacity: 0.9;
             font-size: 0.9rem;
-        }
-
-        /* Decorative elements like homepage */
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.3;
         }
 
         /* Password Section */
@@ -133,28 +120,11 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
         }
 
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .btn:hover::after {
-            left: 100%;
         }
 
         .btn-secondary {
@@ -177,10 +147,48 @@
             display: none;
         }
 
-        /* Upload Section (Hidden until login) */
-        .upload-section {
+        /* Main Content */
+        .main-content {
             display: none;
             padding: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Upload Form */
+        .upload-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+            margin-bottom: 2rem;
         }
 
         .section-title {
@@ -189,24 +197,6 @@
             color: var(--dark);
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #f0f0f0;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .upload-form {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid #eaeaea;
         }
 
         .form-row {
@@ -251,10 +241,9 @@
         select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
         }
 
-        /* File Upload Styling - Similar to Homepage */
+        /* File Upload */
         .file-upload-container {
             background: white;
             border: 2px dashed #e0e0e0;
@@ -268,11 +257,6 @@
         .file-upload-container:hover {
             border-color: var(--primary);
             background: #f8f9fa;
-        }
-
-        .file-upload-container.drag-over {
-            border-color: var(--success);
-            background: rgba(76, 201, 240, 0.1);
         }
 
         .file-upload-label {
@@ -291,11 +275,6 @@
             margin-bottom: 0.5rem;
         }
 
-        .file-upload-hint {
-            color: var(--gray);
-            font-size: 0.85rem;
-        }
-
         .file-input {
             display: none;
         }
@@ -312,13 +291,61 @@
             border: 2px solid #e0e0e0;
         }
 
-        .file-name {
-            margin-top: 0.5rem;
-            color: var(--dark);
-            font-size: 0.9rem;
+        /* Products Preview */
+        .products-preview-container {
+            display: none;
         }
 
-        /* Success Message - Enhanced */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-img {
+            height: 150px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-price {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Success Message */
         .success-message {
             background: linear-gradient(to right, #d4edda, #c3e6cb);
             color: #155724;
@@ -327,19 +354,12 @@
             margin-bottom: 1.5rem;
             display: none;
             border-left: 4px solid #28a745;
-            animation: slideIn 0.3s ease-out;
-            box-shadow: var(--shadow);
         }
 
-        @keyframes slideIn {
-            from { transform: translateY(-10px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Links Section - Matching Homepage */
+        /* Links Section */
         .links-section {
             padding: 1.5rem 2rem;
-            background: linear-gradient(to right, #f8f9fa, #f0f2f5);
+            background: #f8f9fa;
             border-top: 1px solid #e0e0e0;
             display: flex;
             justify-content: center;
@@ -355,8 +375,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
         }
 
         .link-btn-primary {
@@ -375,51 +393,14 @@
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
         }
 
-        .link-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .link-btn:hover::after {
-            left: 100%;
-        }
-
-        @media (max-width: 576px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .links-section {
+        @media (max-width: 768px) {
+            .tabs {
                 flex-direction: column;
             }
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -427,20 +408,20 @@
     <div class="container" id="mainContainer">
         <!-- Password Section -->
         <div class="header">
-            <h1><i class="fas fa-shield-alt"></i> Secure Upload</h1>
+            <h1><i class="fas fa-shield-alt"></i> Admin Panel</h1>
             <p>Password protected access only</p>
         </div>
 
         <div class="password-section" id="passwordSection">
             <div class="form-group">
-                <label for="uploadPassword">Enter Upload Password</label>
-                <input type="password" id="uploadPassword" placeholder="Enter password to access upload">
+                <label for="adminPassword">Enter Admin Password</label>
+                <input type="password" id="adminPassword" placeholder="Enter admin password">
             </div>
             <div class="error-message" id="errorMessage">
                 Incorrect password! Please try again.
             </div>
-            <button class="btn" onclick="checkUploadPassword()">
-                <i class="fas fa-lock"></i> Access Upload
+            <button class="btn" onclick="checkAdminPassword()">
+                <i class="fas fa-lock"></i> Access Admin Panel
             </button>
             
             <button class="btn btn-secondary" onclick="goToHome()">
@@ -448,84 +429,100 @@
             </button>
         </div>
 
-        <!-- Upload Section (Shows after password) -->
-        <div class="upload-section" id="uploadSection">
-            <div class="success-message" id="successMessage">
-                <i class="fas fa-check-circle"></i> Product uploaded successfully!
-            </div>
-
-            <h2 class="section-title">Upload Product</h2>
-            
-            <div class="upload-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="productName">Product Name *</label>
-                        <input type="text" id="productName" placeholder="Enter product name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productPrice">Price ($) *</label>
-                        <input type="number" id="productPrice" placeholder="Enter price" step="0.01">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="productCategory">Category *</label>
-                        <select id="productCategory">
-                            <option value="">Select Category</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="clothing">Clothing</option>
-                            <option value="home">Home & Kitchen</option>
-                            <option value="books">Books</option>
-                            <option value="sports">Sports</option>
-                            <option value="beauty">Beauty & Health</option>
-                            <option value="toys">Toys & Games</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productQuantity">Quantity *</label>
-                        <input type="number" id="productQuantity" placeholder="Enter quantity" min="1">
-                    </div>
-                </div>
-                
-                <!-- File Upload Section (Replaced Image URL) -->
-                <div class="form-group">
-                    <label for="productImage">Product Image *</label>
-                    <div class="file-upload-container" id="fileUploadContainer">
-                        <label for="imageUpload" class="file-upload-label">
-                            <div class="file-upload-icon">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </div>
-                            <div class="file-upload-text">
-                                <strong>Click to upload</strong> or drag and drop
-                            </div>
-                            <div class="file-upload-hint">
-                                PNG, JPG or WEBP (Max 2MB)
-                            </div>
-                        </label>
-                        <input type="file" id="imageUpload" class="file-input" accept=".jpg,.jpeg,.png,.webp" onchange="handleFileSelect(event)">
-                        
-                        <div class="file-preview" id="filePreview">
-                            <img id="previewImage" src="" alt="Preview">
-                            <div class="file-name" id="fileName"></div>
-                        </div>
-                    </div>
-                    <div class="loading" id="uploadLoading">
-                        <div class="loading-spinner"></div>
-                        <p>Uploading image...</p>
-                    </div>
-                </div>
-                
-                <div class="form-full">
-                    <label for="productDescription">Description *</label>
-                    <textarea id="productDescription" placeholder="Enter product description..."></textarea>
-                </div>
-                
-                <button class="btn" onclick="uploadProduct()" id="uploadBtn">
+        <!-- Main Content (Shows after password) -->
+        <div class="main-content" id="mainContent">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('upload')">
                     <i class="fas fa-upload"></i> Upload Product
                 </button>
+                <button class="tab-btn" onclick="showTab('products')">
+                    <i class="fas fa-box"></i> View Products ({totalProducts})
+                </button>
+            </div>
+
+            <!-- Upload Tab -->
+            <div id="uploadTab" class="tab-content">
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> Product uploaded successfully!
+                </div>
+
+                <h2 class="section-title">Upload New Product</h2>
+                
+                <div class="upload-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productName">Product Name *</label>
+                            <input type="text" id="productName" placeholder="Enter product name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productPrice">Price ($) *</label>
+                            <input type="number" id="productPrice" placeholder="Enter price" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productCategory">Category *</label>
+                            <select id="productCategory">
+                                <option value="">Select Category</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="home">Home & Kitchen</option>
+                                <option value="books">Books</option>
+                                <option value="sports">Sports</option>
+                                <option value="beauty">Beauty & Health</option>
+                                <option value="toys">Toys & Games</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productQuantity">Quantity *</label>
+                            <input type="number" id="productQuantity" placeholder="Enter quantity" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productImage">Product Image *</label>
+                        <div class="file-upload-container" id="fileUploadContainer">
+                            <label for="imageUpload" class="file-upload-label">
+                                <div class="file-upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="file-upload-text">
+                                    <strong>Click to upload</strong> or drag and drop
+                                </div>
+                                <div style="color: var(--gray); font-size: 0.85rem;">
+                                    PNG, JPG or WEBP (Max 2MB)
+                                </div>
+                            </label>
+                            <input type="file" id="imageUpload" class="file-input" accept=".jpg,.jpeg,.png,.webp" onchange="handleFileSelect(event)">
+                            
+                            <div class="file-preview" id="filePreview">
+                                <img id="previewImage" src="" alt="Preview">
+                                <div style="margin-top: 0.5rem; color: var(--dark); font-size: 0.9rem;" id="fileName"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-full">
+                        <label for="productDescription">Description *</label>
+                        <textarea id="productDescription" placeholder="Enter product description..."></textarea>
+                    </div>
+                    
+                    <button class="btn" onclick="uploadProduct()" id="uploadBtn">
+                        <i class="fas fa-upload"></i> Upload Product
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="productsTab" class="tab-content products-preview-container">
+                <h2 class="section-title">All Uploaded Products</h2>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
             </div>
         </div>
 
@@ -535,42 +532,32 @@
                 <i class="fas fa-home"></i> Home
             </a>
             <a href="products.html" class="link-btn link-btn-secondary">
-                <i class="fas fa-box"></i> View Products
+                <i class="fas fa-box"></i> View on Products Page
             </a>
         </div>
     </div>
 
     <script>
-        // 🔐 SECURE PASSWORD SYSTEM
-        const ENCRYPTED_PASSWORD = "RmFpemFuMTIz"; // Base64 encrypted "Faizan123"
+        // 🔐 NEW ADMIN PASSWORD
+        const ADMIN_PASSWORD = "h$megam@rt";
         
         // File upload variables
         let uploadedImageBase64 = null;
-        let uploadedFileName = null;
         
         // Check password function
-        function checkUploadPassword() {
-            const passwordInput = document.getElementById('uploadPassword').value;
+        function checkAdminPassword() {
+            const passwordInput = document.getElementById('adminPassword').value;
             
-            try {
-                const isValid = validatePassword(passwordInput);
-                
-                if (isValid) {
-                    document.getElementById('passwordSection').style.display = 'none';
-                    document.getElementById('uploadSection').style.display = 'block';
-                    sessionStorage.setItem('uploadAuthenticated', 'true');
-                    document.getElementById('uploadPassword').value = '';
-                } else {
-                    showError('Incorrect password!');
-                }
-            } catch (error) {
-                showError('Authentication error!');
+            if (passwordInput === ADMIN_PASSWORD) {
+                document.getElementById('passwordSection').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                sessionStorage.setItem('adminAuthenticated', 'true');
+                document.getElementById('adminPassword').value = '';
+                updateProductsCount();
+                loadProductsPreview();
+            } else {
+                showError('Incorrect password! Please enter the correct admin password');
             }
-        }
-        
-        // Password validation
-        function validatePassword(input) {
-            return input === "Faizan123";
         }
         
         function showError(message) {
@@ -578,7 +565,7 @@
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
             
-            const passwordInput = document.getElementById('uploadPassword');
+            const passwordInput = document.getElementById('adminPassword');
             passwordInput.style.borderColor = '#dc3545';
             passwordInput.style.animation = 'shake 0.5s';
             
@@ -600,12 +587,31 @@
         `;
         document.head.appendChild(style);
         
+        // Tab functionality
+        function showTab(tabName) {
+            // Update active tab button
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (tabName === 'upload') {
+                document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+                document.getElementById('uploadTab').style.display = 'block';
+                document.getElementById('productsTab').style.display = 'none';
+            } else {
+                document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+                document.getElementById('uploadTab').style.display = 'none';
+                document.getElementById('productsTab').style.display = 'block';
+                loadProductsPreview();
+            }
+        }
+        
         // File upload handling
         function handleFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
             
-            // Check file size (max 2MB)
+            // Check file size
             if (file.size > 2 * 1024 * 1024) {
                 alert('File size must be less than 2MB');
                 return;
@@ -618,11 +624,6 @@
                 return;
             }
             
-            uploadedFileName = file.name;
-            
-            // Show loading
-            document.getElementById('uploadLoading').style.display = 'block';
-            
             // Read file as base64
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -634,78 +635,76 @@
                 const fileName = document.getElementById('fileName');
                 
                 previewImage.src = uploadedImageBase64;
-                fileName.textContent = uploadedFileName;
+                fileName.textContent = file.name;
                 preview.style.display = 'block';
                 
-                // Hide loading
-                document.getElementById('uploadLoading').style.display = 'none';
-                
                 // Change upload container style
-                const container = document.getElementById('fileUploadContainer');
-                container.style.borderColor = '#28a745';
-                container.style.backgroundColor = 'rgba(40, 167, 69, 0.05)';
-            };
-            
-            reader.onerror = function() {
-                alert('Error reading file');
-                document.getElementById('uploadLoading').style.display = 'none';
+                document.getElementById('fileUploadContainer').style.borderColor = '#28a745';
             };
             
             reader.readAsDataURL(file);
         }
         
-        // Drag and drop functionality
-        const fileUploadContainer = document.getElementById('fileUploadContainer');
-        const fileInput = document.getElementById('imageUpload');
-        
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            fileUploadContainer.addEventListener(eventName, preventDefaults, false);
-        });
-        
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        
-        ['dragenter', 'dragover'].forEach(eventName => {
-            fileUploadContainer.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            fileUploadContainer.addEventListener(eventName, unhighlight, false);
-        });
-        
-        function highlight() {
-            fileUploadContainer.classList.add('drag-over');
-        }
-        
-        function unhighlight() {
-            fileUploadContainer.classList.remove('drag-over');
-        }
-        
-        fileUploadContainer.addEventListener('drop', handleDrop, false);
-        
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            
-            if (files.length > 0) {
-                fileInput.files = files;
-                handleFileSelect({ target: { files: files } });
-            }
-        }
-        
         // Click container to trigger file input
-        fileUploadContainer.addEventListener('click', () => {
-            fileInput.click();
+        document.getElementById('fileUploadContainer').addEventListener('click', () => {
+            document.getElementById('imageUpload').click();
         });
         
         // Check if already authenticated
         function checkSession() {
-            if (sessionStorage.getItem('uploadAuthenticated') === 'true') {
+            if (sessionStorage.getItem('adminAuthenticated') === 'true') {
                 document.getElementById('passwordSection').style.display = 'none';
-                document.getElementById('uploadSection').style.display = 'block';
+                document.getElementById('mainContent').style.display = 'block';
+                updateProductsCount();
+                loadProductsPreview();
             }
+        }
+        
+        // Update products count in tab
+        function updateProductsCount() {
+            const products = JSON.parse(localStorage.getItem('shopEasyProducts')) || [];
+            const tabButton = document.querySelector('.tab-btn:nth-child(2)');
+            tabButton.innerHTML = <i class="fas fa-box"></i> View Products (${products.length});
+        }
+        
+        // Load products preview
+        function loadProductsPreview() {
+            const products = JSON.parse(localStorage.getItem('shopEasyProducts')) || [];
+            const productsGrid = document.getElementById('productsGrid');
+            
+            productsGrid.innerHTML = '';
+            
+            if (products.length === 0) {
+                productsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--gray);">
+                        <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>No products uploaded yet</h3>
+                        <p>Upload your first product using the "Upload Product" tab</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show all products
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">$${product.price}</div>
+                        <div class="product-meta">
+                            <span>${product.category}</span>
+                            <span>Qty: ${product.quantity}</span>
+                        </div>
+                        <div style="font-size: 0.7rem; color: #888; margin-top: 0.5rem;">
+                            Added: ${product.dateAdded}
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
         }
         
         // Upload product function
@@ -737,10 +736,9 @@
                 price: parseFloat(price).toFixed(2),
                 category: category,
                 quantity: parseInt(quantity),
-                image: uploadedImageBase64, // Store base64 image
+                image: uploadedImageBase64,
                 description: description,
-                dateAdded: new Date().toLocaleDateString(),
-                fileName: uploadedFileName
+                dateAdded: new Date().toLocaleDateString('en-PK')
             };
             
             // Add to products array
@@ -767,26 +765,23 @@
             
             // Reset file upload
             uploadedImageBase64 = null;
-            uploadedFileName = null;
             document.getElementById('filePreview').style.display = 'none';
             document.getElementById('imageUpload').value = '';
-            fileUploadContainer.style.borderColor = '#e0e0e0';
-            fileUploadContainer.style.backgroundColor = 'white';
+            document.getElementById('fileUploadContainer').style.borderColor = '#e0e0e0';
+            
+            // Update products count and preview
+            updateProductsCount();
+            loadProductsPreview();
+            
+            // Auto switch to products tab
+            setTimeout(() => {
+                showTab('products');
+            }, 1000);
             
             // Hide success message after 5 seconds
             setTimeout(() => {
                 successMessage.style.display = 'none';
             }, 5000);
-            
-            // Update products page
-            updateProductsPage(newProduct);
-        }
-        
-        // Update products page with new product
-        function updateProductsPage(product) {
-            console.log('New product added:', product);
-            const event = new CustomEvent('newProductAdded', { detail: product });
-            window.dispatchEvent(event);
         }
         
         // Navigation functions
@@ -794,14 +789,10 @@
             window.location.href = 'index.html';
         }
         
-        function goToProducts() {
-            window.location.href = 'products.html';
-        }
-        
         // Allow Enter key in password field
-        document.getElementById('uploadPassword').addEventListener('keypress', function(e) {
+        document.getElementById('adminPassword').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                checkUploadPassword();
+                checkAdminPassword();
             }
         });
         
@@ -809,30 +800,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             checkSession();
             
-            // Password hint
-            console.log('%c🔐 Secure Upload System', 'color: #4361ee; font-size: 16px; font-weight: bold;');
-            console.log('%cPassword: Faizan123', 'color: green; font-weight: bold;');
-            console.log('%cPassword is case-sensitive', 'color: #666;');
+            // Security note
+            console.log('%c🔐 Admin Panel Security', 'color: #4361ee; font-size: 16px; font-weight: bold;');
+            console.log('%cPassword set to: h$megam@rt', 'color: green; font-weight: bold;');
+            console.log('%cKeep this password secure!', 'color: #dc3545;');
         });
-        
-        // Export functions for other pages
-        window.uploadPage = {
-            getProducts: function() {
-                return JSON.parse(localStorage.getItem('shopEasyProducts')) || [];
-            },
-            
-            addProduct: function(product) {
-                const products = this.getProducts();
-                products.push(product);
-                localStorage.setItem('shopEasyProducts', JSON.stringify(products));
-                return true;
-            },
-            
-            clearProducts: function() {
-                localStorage.removeItem('shopEasyProducts');
-                return true;
-            }
-        };
     </script>
 </body>
 </html>
