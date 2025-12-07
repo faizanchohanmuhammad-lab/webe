@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Upload - ShopEasy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header - Matching Homepage Style */
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Decorative elements like homepage */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+
+        /* Password Section */
+        .password-section {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            text-align: center;
+            display: none;
+        }
+
+        /* Upload Section (Hidden until login) */
+        .upload-section {
+            display: none;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .upload-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-full {
+            margin-bottom: 1rem;
+        }
+
+        .form-full textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 100px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-full textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        /* File Upload Styling - Similar to Homepage */
+        .file-upload-container {
+            background: white;
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+        }
+
+        .file-upload-container:hover {
+            border-color: var(--primary);
+            background: #f8f9fa;
+        }
+
+        .file-upload-container.drag-over {
+            border-color: var(--success);
+            background: rgba(76, 201, 240, 0.1);
+        }
+
+        .file-upload-label {
+            display: block;
+            cursor: pointer;
+        }
+
+        .file-upload-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-text {
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-hint {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-preview {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .file-preview img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .file-name {
+            margin-top: 0.5rem;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        /* Success Message - Enhanced */
+        .success-message {
+            background: linear-gradient(to right, #d4edda, #c3e6cb);
+            color: #155724;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+            border-left: 4px solid #28a745;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: var(--shadow);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Links Section - Matching Homepage */
+        .links-section {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(to right, #f8f9fa, #f0f2f5);
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .link-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .link-btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .link-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .link-btn:hover::after {
+            left: 100%;
+        }
+
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .links-section {
+                flex-direction: column;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContainer">
+        <!-- Password Section -->
+        <div class="header">
+            <h1><i class="fas fa-shield-alt"></i> Secure Upload</h1>
+            <p>Password protected access only</p>
+        </div>
+
+        <div class="password-section" id="passwordSection">
+            <div class="form-group">
+                <label for="uploadPassword">Enter Upload Password</label>
+                <input type="password" id="uploadPassword" placeholder="Enter password to access upload">
+            </div>
+            <div class="error-message" id="errorMessage">
+                Incorrect password! Please try again.
+            </div>
+            <button class="btn" onclick="checkUploadPassword()">
+                <i class="fas fa-lock"></i> Access Upload
+            </button>
+            
+            <button class="btn btn-secondary" onclick="goToHome()">
+                <i class="fas fa-home"></i> Back to Home
+            </button>
+        </div>
+
+        <!-- Upload Section (Shows after password) -->
+        <div class="upload-section" id="uploadSection">
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Product uploaded successfully!
+            </div>
+
+            <h2 class="section-title">Upload Product</h2>
+            
+            <div class="upload-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">Product Name *</label>
+                        <input type="text" id="productName" placeholder="Enter product name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productPrice">Price ($) *</label>
+                        <input type="number" id="productPrice" placeholder="Enter price" step="0.01">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productCategory">Category *</label>
+                        <select id="productCategory">
+                            <option value="">Select Category</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="home">Home & Kitchen</option>
+                            <option value="books">Books</option>
+                            <option value="sports">Sports</option>
+                            <option value="beauty">Beauty & Health</option>
+                            <option value="toys">Toys & Games</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productQuantity">Quantity *</label>
+                        <input type="number" id="productQuantity" placeholder="Enter quantity" min="1">
+                    </div>
+                </div>
+                
+                <!-- File Upload Section (Replaced Image URL) -->
+                <div class="form-group">
+                    <label for="productImage">Product Image *</label>
+                    <div class="file-upload-container" id="fileUploadContainer">
+                        <label for="imageUpload" class="file-upload-label">
+                            <div class="file-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="file-upload-text">
+                                <strong>Click to upload</strong> or drag and drop
+                            </div>
+                            <div class="file-upload-hint">
+                                PNG, JPG or WEBP (Max 2MB)
+                            </div>
+                        </label>
+                        <input type="file" id="imageUpload" class="file-input" accept=".jpg,.jpeg,.png,.webp" onchange="handleFileSelect(event)">
+                        
+                        <div class="file-preview" id="filePreview">
+                            <img id="previewImage" src="" alt="Preview">
+                            <div class="file-name" id="fileName"></div>
+                        </div>
+                    </div>
+                    <div class="loading" id="uploadLoading">
+                        <div class="loading-spinner"></div>
+                        <p>Uploading image...</p>
+                    </div>
+                </div>
+                
+                <div class="form-full">
+                    <label for="productDescription">Description *</label>
+                    <textarea id="productDescription" placeholder="Enter product description..."></textarea>
+                </div>
+                
+                <button class="btn" onclick="uploadProduct()" id="uploadBtn">
+                    <i class="fas fa-upload"></i> Upload Product
+                </button>
+            </div>
+        </div>
+
+        <!-- Links Section -->
+        <div class="links-section">
+            <a href="index.html" class="link-btn link-btn-primary">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="products.html" class="link-btn link-btn-secondary">
+                <i class="fas fa-box"></i> View Products
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 🔐 SECURE PASSWORD SYSTEM
+        const ENCRYPTED_PASSWORD = "RmFpemFuMTIz"; // Base64 encrypted "Faizan123"
+        
+        // File upload variables
+        let uploadedImageBase64 = null;
+        let uploadedFileName = null;
+        
+        // Check password function
+        function checkUploadPassword() {
+            const passwordInput = document.getElementById('uploadPassword').value;
+            
+            try {
+                const isValid = validatePassword(passwordInput);
+                
+                if (isValid) {
+                    document.getElementById('passwordSection').style.display = 'none';
+                    document.getElementById('uploadSection').style.display = 'block';
+                    sessionStorage.setItem('uploadAuthenticated', 'true');
+                    document.getElementById('uploadPassword').value = '';
+                } else {
+                    showError('Incorrect password!');
+                }
+            } catch (error) {
+                showError('Authentication error!');
+            }
+        }
+        
+        // Password validation
+        function validatePassword(input) {
+            return input === "Faizan123";
+        }
+        
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            const passwordInput = document.getElementById('uploadPassword');
+            passwordInput.style.borderColor = '#dc3545';
+            passwordInput.style.animation = 'shake 0.5s';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+                passwordInput.style.borderColor = '#e0e0e0';
+                passwordInput.style.animation = '';
+            }, 3000);
+        }
+        
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // File upload handling
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Check file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('File size must be less than 2MB');
+                return;
+            }
+            
+            // Check file type
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload a valid image file (JPG, PNG, or WEBP)');
+                return;
+            }
+            
+            uploadedFileName = file.name;
+            
+            // Show loading
+            document.getElementById('uploadLoading').style.display = 'block';
+            
+            // Read file as base64
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedImageBase64 = e.target.result;
+                
+                // Show preview
+                const preview = document.getElementById('filePreview');
+                const previewImage = document.getElementById('previewImage');
+                const fileName = document.getElementById('fileName');
+                
+                previewImage.src = uploadedImageBase64;
+                fileName.textContent = uploadedFileName;
+                preview.style.display = 'block';
+                
+                // Hide loading
+                document.getElementById('uploadLoading').style.display = 'none';
+                
+                // Change upload container style
+                const container = document.getElementById('fileUploadContainer');
+                container.style.borderColor = '#28a745';
+                container.style.backgroundColor = 'rgba(40, 167, 69, 0.05)';
+            };
+            
+            reader.onerror = function() {
+                alert('Error reading file');
+                document.getElementById('uploadLoading').style.display = 'none';
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // Drag and drop functionality
+        const fileUploadContainer = document.getElementById('fileUploadContainer');
+        const fileInput = document.getElementById('imageUpload');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            fileUploadContainer.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            fileUploadContainer.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            fileUploadContainer.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            fileUploadContainer.classList.add('drag-over');
+        }
+        
+        function unhighlight() {
+            fileUploadContainer.classList.remove('drag-over');
+        }
+        
+        fileUploadContainer.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelect({ target: { files: files } });
+            }
+        }
+        
+        // Click container to trigger file input
+        fileUploadContainer.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        // Check if already authenticated
+        function checkSession() {
+            if (sessionStorage.getItem('uploadAuthenticated') === 'true') {
+                document.getElementById('passwordSection').style.display = 'none';
+                document.getElementById('uploadSection').style.display = 'block';
+            }
+        }
+        
+        // Upload product function
+        function uploadProduct() {
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const category = document.getElementById('productCategory').value;
+            const quantity = document.getElementById('productQuantity').value;
+            const description = document.getElementById('productDescription').value;
+            
+            // Validation
+            if (!name || !price || !category || !quantity || !description) {
+                alert('Please fill all required fields!');
+                return;
+            }
+            
+            if (!uploadedImageBase64) {
+                alert('Please upload a product image!');
+                return;
+            }
+            
+            // Get existing products or create new array
+            const products = JSON.parse(localStorage.getItem('shopEasyProducts')) || [];
+            
+            // Create new product object
+            const newProduct = {
+                id: Date.now(),
+                name: name,
+                price: parseFloat(price).toFixed(2),
+                category: category,
+                quantity: parseInt(quantity),
+                image: uploadedImageBase64, // Store base64 image
+                description: description,
+                dateAdded: new Date().toLocaleDateString(),
+                fileName: uploadedFileName
+            };
+            
+            // Add to products array
+            products.push(newProduct);
+            
+            // Save to localStorage
+            localStorage.setItem('shopEasyProducts', JSON.stringify(products));
+            
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            successMessage.innerHTML = `
+                <i class="fas fa-check-circle"></i> 
+                <strong>${name}</strong> uploaded successfully! 
+                <br><small>Price: $${price} | Quantity: ${quantity} | Category: ${category}</small>
+            `;
+            
+            // Clear form
+            document.getElementById('productName').value = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('productCategory').value = '';
+            document.getElementById('productQuantity').value = '';
+            document.getElementById('productDescription').value = '';
+            
+            // Reset file upload
+            uploadedImageBase64 = null;
+            uploadedFileName = null;
+            document.getElementById('filePreview').style.display = 'none';
+            document.getElementById('imageUpload').value = '';
+            fileUploadContainer.style.borderColor = '#e0e0e0';
+            fileUploadContainer.style.backgroundColor = 'white';
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+            
+            // Update products page
+            updateProductsPage(newProduct);
+        }
+        
+        // Update products page with new product
+        function updateProductsPage(product) {
+            console.log('New product added:', product);
+            const event = new CustomEvent('newProductAdded', { detail: product });
+            window.dispatchEvent(event);
+        }
+        
+        // Navigation functions
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+        
+        function goToProducts() {
+            window.location.href = 'products.html';
+        }
+        
+        // Allow Enter key in password field
+        document.getElementById('uploadPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkUploadPassword();
+            }
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkSession();
+            
+            // Password hint
+            console.log('%c🔐 Secure Upload System', 'color: #4361ee; font-size: 16px; font-weight: bold;');
+            console.log('%cPassword: Faizan123', 'color: green; font-weight: bold;');
+            console.log('%cPassword is case-sensitive', 'color: #666;');
+        });
+        
+        // Export functions for other pages
+        window.uploadPage = {
+            getProducts: function() {
+                return JSON.parse(localStorage.getItem('shopEasyProducts')) || [];
+            },
+            
+            addProduct: function(product) {
+                const products = this.getProducts();
+                products.push(product);
+                localStorage.setItem('shopEasyProducts', JSON.stringify(products));
+                return true;
+            },
+            
+            clearProducts: function() {
+                localStorage.removeItem('shopEasyProducts');
+                return true;
+            }
+        };
+    </script>
+</body>
+</html>
