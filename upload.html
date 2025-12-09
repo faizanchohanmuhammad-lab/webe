@@ -37,7 +37,7 @@
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 500px;
             background: white;
             border-radius: 15px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
@@ -56,8 +56,6 @@
             color: white;
             padding: 2rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .header h1 {
@@ -147,48 +145,10 @@
             display: none;
         }
 
-        /* Main Content */
-        .main-content {
+        /* Upload Section */
+        .upload-section {
             display: none;
             padding: 2rem;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 0.5rem;
-        }
-
-        .tab-btn {
-            padding: 0.8rem 1.5rem;
-            background: transparent;
-            border: none;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray);
-            cursor: pointer;
-            transition: var(--transition);
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab-btn.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-        }
-
-        .tab-btn:hover {
-            color: var(--primary);
-        }
-
-        /* Upload Form */
-        .upload-form {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid #eaeaea;
-            margin-bottom: 2rem;
         }
 
         .section-title {
@@ -197,6 +157,12 @@
             color: var(--dark);
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #f0f0f0;
+        }
+
+        .upload-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
         }
 
         .form-row {
@@ -218,13 +184,6 @@
             resize: vertical;
             min-height: 100px;
             font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-full textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
         }
 
         select {
@@ -234,124 +193,77 @@
             border-radius: 8px;
             font-size: 1rem;
             background: white;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: var(--primary);
         }
 
         /* File Upload */
         .file-upload-container {
             background: white;
-            border: 2px dashed #e0e0e0;
+            border: 2px dashed var(--primary);
             border-radius: 10px;
             padding: 1.5rem;
             text-align: center;
             transition: var(--transition);
             margin-bottom: 1.5rem;
-        }
-
-        .file-upload-container:hover {
-            border-color: var(--primary);
-            background: #f8f9fa;
-        }
-
-        .file-upload-label {
-            display: block;
             cursor: pointer;
         }
 
+        .file-upload-container:hover {
+            background: rgba(67, 97, 238, 0.05);
+            border-color: var(--secondary);
+        }
+
         .file-upload-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .file-upload-text {
-            color: var(--gray);
+            color: var(--dark);
+            font-size: 1.1rem;
             margin-bottom: 0.5rem;
+        }
+
+        .file-upload-subtext {
+            color: var(--gray);
+            font-size: 0.9rem;
         }
 
         .file-input {
             display: none;
         }
 
-        .file-preview {
-            margin-top: 1rem;
+        /* Image Preview */
+        .image-preview-container {
             display: none;
+            margin-top: 1.5rem;
         }
 
-        .file-preview img {
+        .preview-title {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-image {
             max-width: 100%;
-            max-height: 150px;
+            max-height: 200px;
             border-radius: 8px;
             border: 2px solid #e0e0e0;
-        }
-
-        /* Products Preview */
-        .products-preview-container {
-            display: none;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .product-img {
-            height: 150px;
-            width: 100%;
-            object-fit: cover;
-        }
-
-        .product-info {
-            padding: 1rem;
-        }
-
-        .product-title {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-
-        .product-price {
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .product-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: var(--gray);
+            margin: 0 auto;
+            display: block;
         }
 
         /* Success Message */
         .success-message {
-            background: linear-gradient(to right, #d4edda, #c3e6cb);
+            background: #d4edda;
             color: #155724;
-            padding: 1rem 1.5rem;
+            padding: 1rem;
             border-radius: 8px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             display: none;
             border-left: 4px solid #28a745;
         }
@@ -368,7 +280,7 @@
 
         .link-btn {
             padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
@@ -378,7 +290,7 @@
         }
 
         .link-btn-primary {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background: var(--primary);
             color: white;
         }
 
@@ -393,13 +305,41 @@
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
         }
 
-        @media (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
+        /* Progress Bar */
+        .progress-container {
+            display: none;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--success));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
             }
             
-            .products-grid {
-                grid-template-columns: 1fr;
+            .links-section {
+                flex-direction: column;
             }
         }
     </style>
@@ -409,18 +349,20 @@
         <!-- Password Section -->
         <div class="header">
             <h1><i class="fas fa-shield-alt"></i> Admin Panel</h1>
-            <p>Password protected access only</p>
+            <p><strong></strong> (Case-sensitive)</p>
         </div>
 
         <div class="password-section" id="passwordSection">
             <div class="form-group">
-                <label for="adminPassword">Enter Admin Password</label>
-                <input type="password" id="adminPassword" placeholder="Enter admin password">
+                <label for="uploadPassword">Enter Admin Password</label>
+                <input type="password" id="uploadPassword" placeholder="Enter password">
+                <small style="color: var(--gray); display: block; margin-top: 0.3rem;">
+                </small>
             </div>
             <div class="error-message" id="errorMessage">
-                Incorrect password! Please try again.
+                Incorrect password! Try: <strong>Waheed</strong>
             </div>
-            <button class="btn" onclick="checkAdminPassword()">
+            <button class="btn" id="login">
                 <i class="fas fa-lock"></i> Access Admin Panel
             </button>
             
@@ -429,100 +371,80 @@
             </button>
         </div>
 
-        <!-- Main Content (Shows after password) -->
-        <div class="main-content" id="mainContent">
-            <!-- Tabs -->
-            <div class="tabs">
-                <button class="tab-btn active" onclick="showTab('upload')">
-                    <i class="fas fa-upload"></i> Upload Product
-                </button>
-                <button class="tab-btn" onclick="showTab('products')">
-                    <i class="fas fa-box"></i> View Products ({totalProducts})
-                </button>
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Product uploaded successfully!
             </div>
 
-            <!-- Upload Tab -->
-            <div id="uploadTab" class="tab-content">
-                <div class="success-message" id="successMessage">
-                    <i class="fas fa-check-circle"></i> Product uploaded successfully!
-                </div>
-
-                <h2 class="section-title">Upload New Product</h2>
-                
-                <div class="upload-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="productName">Product Name *</label>
-                            <input type="text" id="productName" placeholder="Enter product name">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="productPrice">Price ($) *</label>
-                            <input type="number" id="productPrice" placeholder="Enter price" step="0.01">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="productCategory">Category *</label>
-                            <select id="productCategory">
-                                <option value="">Select Category</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="clothing">Clothing</option>
-                                <option value="home">Home & Kitchen</option>
-                                <option value="books">Books</option>
-                                <option value="sports">Sports</option>
-                                <option value="beauty">Beauty & Health</option>
-                                <option value="toys">Toys & Games</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="productQuantity">Quantity *</label>
-                            <input type="number" id="productQuantity" placeholder="Enter quantity" min="1">
-                        </div>
+            <h2 class="section-title">Upload New Product</h2>
+            
+            <div class="upload-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">Product Name *</label>
+                        <input type="text" id="productName" placeholder="Enter product name">
                     </div>
                     
                     <div class="form-group">
-                        <label for="productImage">Product Image *</label>
-                        <div class="file-upload-container" id="fileUploadContainer">
-                            <label for="imageUpload" class="file-upload-label">
-                                <div class="file-upload-icon">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                </div>
-                                <div class="file-upload-text">
-                                    <strong>Click to upload</strong> or drag and drop
-                                </div>
-                                <div style="color: var(--gray); font-size: 0.85rem;">
-                                    PNG, JPG or WEBP (Max 2MB)
-                                </div>
-                            </label>
-                            <input type="file" id="imageUpload" class="file-input" accept=".jpg,.jpeg,.png,.webp" onchange="handleFileSelect(event)">
-                            
-                            <div class="file-preview" id="filePreview">
-                                <img id="previewImage" src="" alt="Preview">
-                                <div style="margin-top: 0.5rem; color: var(--dark); font-size: 0.9rem;" id="fileName"></div>
-                            </div>
+                        <label for="productPrice">Price ($) *</label>
+                        <input type="number" id="productPrice" placeholder="Enter price" step="0.01">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productCategory">Category *</label>
+                        <select id="productCategory">
+                            <option value="">Select Category</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="home">Home & Kitchen</option>
+                            <option value="books">Books</option>
+                            <option value="sports">Sports</option>
+                            <option value="beauty">Beauty & Health</option>
+                            <option value="toys">Toys & Games</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="productQuantity">Quantity *</label>
+                        <input type="number" id="productQuantity" placeholder="Enter quantity" min="1">
+                    </div>
+                </div>
+                
+                <!-- File Upload -->
+                <div class="form-group">
+                    <label>Product Image *</label>
+                    <div class="file-upload-container" onclick="document.getElementById('imageUpload').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
                         </div>
+                        <div class="file-upload-text">
+                            Click to upload image
+                        </div>
+                        <div class="file-upload-subtext">
+                            Any image size accepted
+                        </div>
+                        <input type="file" id="imageUpload" class="file-input" accept="image/*">
                     </div>
                     
-                    <div class="form-full">
-                        <label for="productDescription">Description *</label>
-                        <textarea id="productDescription" placeholder="Enter product description..."></textarea>
+                    <div class="image-preview-container" id="imagePreviewContainer">
+                        <div class="preview-title">
+                            <i class="fas fa-image"></i> Image Preview
+                        </div>
+                        <img id="previewImage" class="preview-image" src="" alt="Preview">
                     </div>
-                    
-                    <button class="btn" onclick="uploadProduct()" id="uploadBtn">
-                        <i class="fas fa-upload"></i> Upload Product
-                    </button>
                 </div>
-            </div>
-
-            <!-- Products Tab -->
-            <div id="productsTab" class="tab-content products-preview-container">
-                <h2 class="section-title">All Uploaded Products</h2>
-                <div class="products-grid" id="productsGrid">
-                    <!-- Products will be loaded here -->
+                
+                <div class="form-full">
+                    <label for="productDescription">Description *</label>
+                    <textarea id="productDescription" placeholder="Enter product description..."></textarea>
                 </div>
+                
+                <button class="btn" onclick="uploadProduct()">
+                    <i class="fas fa-upload"></i> Upload Product
+                </button>
             </div>
         </div>
 
@@ -532,48 +454,54 @@
                 <i class="fas fa-home"></i> Home
             </a>
             <a href="products.html" class="link-btn link-btn-secondary">
-                <i class="fas fa-box"></i> View on Products Page
+                <i class="fas fa-box"></i> View Products
             </a>
         </div>
     </div>
 
     <script>
-        // 🔐 NEW ADMIN PASSWORD
-        const ADMIN_PASSWORD = "h$megam@rt";
+        // 🔐 SIMPLE PASSWORD CHECK
+        const CORRECT_PASSWORD = "Waheed"; // Simple password
         
         // File upload variables
         let uploadedImageBase64 = null;
-        
-        // Check password function
-        function checkAdminPassword() {
-            const passwordInput = document.getElementById('adminPassword').value;
-            
-            if (passwordInput === ADMIN_PASSWORD) {
-                document.getElementById('passwordSection').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-                sessionStorage.setItem('adminAuthenticated', 'true');
-                document.getElementById('adminPassword').value = '';
-                updateProductsCount();
-                loadProductsPreview();
-            } else {
-                showError('Incorrect password! Please enter the correct admin password');
-            }
-        }
-        
-        function showError(message) {
+        var login = document.getElementById("login");
+        // Check password function - SIMPLE VERSION
+        login.onclick = function() {
+            const passwordInput = document.getElementById('uploadPassword').value;
             const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
             
-            const passwordInput = document.getElementById('adminPassword');
-            passwordInput.style.borderColor = '#dc3545';
-            passwordInput.style.animation = 'shake 0.5s';
-            
-            setTimeout(() => {
-                errorMessage.style.display = 'none';
-                passwordInput.style.borderColor = '#e0e0e0';
-                passwordInput.style.animation = '';
-            }, 3000);
+            // Simple direct comparison
+            if (passwordInput === CORRECT_PASSWORD) {
+                // Hide password section, show upload section
+                document.getElementById('passwordSection').style.display = 'none';
+                document.getElementById('uploadSection').style.display = 'block';
+                
+                // Set session flag
+                sessionStorage.setItem('adminAuthenticated', 'true');
+                
+                // Clear password field
+                document.getElementById('uploadPassword').value = '';
+                
+                console.log('Admin access granted');
+            } else {
+                // Show error with hint
+                errorMessage.innerHTML = "Incorrect password! Try: <strong>${CORRECT_PASSWORD}</strong>";
+                errorMessage.style.display = 'block';
+                
+                // Shake animation
+                const passwordInput = document.getElementById('uploadPassword');
+                passwordInput.style.borderColor = '#dc3545';
+                passwordInput.style.animation = 'shake 0.5s';
+                
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                    passwordInput.style.borderColor = '#e0e0e0';
+                    passwordInput.style.animation = '';
+                }, 3000);
+                
+                console.log('Incorrect password entered:', passwordInput);
+            }
         }
         
         // Add shake animation
@@ -587,124 +515,52 @@
         `;
         document.head.appendChild(style);
         
-        // Tab functionality
-        function showTab(tabName) {
-            // Update active tab button
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            if (tabName === 'upload') {
-                document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-                document.getElementById('uploadTab').style.display = 'block';
-                document.getElementById('productsTab').style.display = 'none';
-            } else {
-                document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-                document.getElementById('uploadTab').style.display = 'none';
-                document.getElementById('productsTab').style.display = 'block';
-                loadProductsPreview();
-            }
-        }
-        
-        // File upload handling
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
+        // Handle file selection
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
             if (!file) return;
             
-            // Check file size
-            if (file.size > 2 * 1024 * 1024) {
-                alert('File size must be less than 2MB');
+            // Check if it's an image
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file');
                 return;
             }
             
-            // Check file type
-            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image file (JPG, PNG, or WEBP)');
-                return;
-            }
-            
-            // Read file as base64
             const reader = new FileReader();
+            
             reader.onload = function(e) {
                 uploadedImageBase64 = e.target.result;
                 
                 // Show preview
-                const preview = document.getElementById('filePreview');
+                const previewContainer = document.getElementById('imagePreviewContainer');
                 const previewImage = document.getElementById('previewImage');
-                const fileName = document.getElementById('fileName');
                 
                 previewImage.src = uploadedImageBase64;
-                fileName.textContent = file.name;
-                preview.style.display = 'block';
+                previewContainer.style.display = 'block';
                 
                 // Change upload container style
-                document.getElementById('fileUploadContainer').style.borderColor = '#28a745';
+                const container = document.querySelector('.file-upload-container');
+                container.style.borderColor = '#28a745';
+                container.style.backgroundColor = 'rgba(40, 167, 69, 0.05)';
+                
+                console.log('Image loaded successfully');
+            };
+            
+            reader.onerror = function() {
+                alert('Error reading file');
+                console.error('File reading error');
             };
             
             reader.readAsDataURL(file);
-        }
-        
-        // Click container to trigger file input
-        document.getElementById('fileUploadContainer').addEventListener('click', () => {
-            document.getElementById('imageUpload').click();
         });
         
         // Check if already authenticated
         function checkSession() {
             if (sessionStorage.getItem('adminAuthenticated') === 'true') {
                 document.getElementById('passwordSection').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-                updateProductsCount();
-                loadProductsPreview();
+                document.getElementById('uploadSection').style.display = 'block';
+                console.log('Already authenticated from session');
             }
-        }
-        
-        // Update products count in tab
-        function updateProductsCount() {
-            const products = JSON.parse(localStorage.getItem('shopEasyProducts')) || [];
-            const tabButton = document.querySelector('.tab-btn:nth-child(2)');
-            tabButton.innerHTML = <i class="fas fa-box"></i> View Products (${products.length});
-        }
-        
-        // Load products preview
-        function loadProductsPreview() {
-            const products = JSON.parse(localStorage.getItem('shopEasyProducts')) || [];
-            const productsGrid = document.getElementById('productsGrid');
-            
-            productsGrid.innerHTML = '';
-            
-            if (products.length === 0) {
-                productsGrid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--gray);">
-                        <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                        <h3>No products uploaded yet</h3>
-                        <p>Upload your first product using the "Upload Product" tab</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Show all products
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <div class="product-price">$${product.price}</div>
-                        <div class="product-meta">
-                            <span>${product.category}</span>
-                            <span>Qty: ${product.quantity}</span>
-                        </div>
-                        <div style="font-size: 0.7rem; color: #888; margin-top: 0.5rem;">
-                            Added: ${product.dateAdded}
-                        </div>
-                    </div>
-                `;
-                productsGrid.appendChild(productCard);
-            });
         }
         
         // Upload product function
@@ -731,14 +587,15 @@
             
             // Create new product object
             const newProduct = {
-                id: Date.now(),
+                id: Date.now(), // Unique ID
                 name: name,
                 price: parseFloat(price).toFixed(2),
                 category: category,
                 quantity: parseInt(quantity),
                 image: uploadedImageBase64,
                 description: description,
-                dateAdded: new Date().toLocaleDateString('en-PK')
+                dateAdded: new Date().toLocaleDateString(),
+                timestamp: Date.now()
             };
             
             // Add to products array
@@ -762,26 +619,27 @@
             document.getElementById('productCategory').value = '';
             document.getElementById('productQuantity').value = '';
             document.getElementById('productDescription').value = '';
-            
-            // Reset file upload
-            uploadedImageBase64 = null;
-            document.getElementById('filePreview').style.display = 'none';
             document.getElementById('imageUpload').value = '';
-            document.getElementById('fileUploadContainer').style.borderColor = '#e0e0e0';
             
-            // Update products count and preview
-            updateProductsCount();
-            loadProductsPreview();
+            // Reset image upload
+            uploadedImageBase64 = null;
+            document.getElementById('imagePreviewContainer').style.display = 'none';
+            const container = document.querySelector('.file-upload-container');
+            container.style.borderColor = 'var(--primary)';
+            container.style.backgroundColor = 'white';
             
-            // Auto switch to products tab
-            setTimeout(() => {
-                showTab('products');
-            }, 1000);
+            console.log('Product saved:', newProduct);
+            console.log('Total products in storage:', products.length);
             
             // Hide success message after 5 seconds
             setTimeout(() => {
                 successMessage.style.display = 'none';
             }, 5000);
+            
+            // Auto redirect to products page after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'products.html';
+            }, 2000);
         }
         
         // Navigation functions
@@ -790,9 +648,9 @@
         }
         
         // Allow Enter key in password field
-        document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+        document.getElementById('uploadPassword').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                checkAdminPassword();
+                checkPassword();
             }
         });
         
@@ -800,11 +658,27 @@
         document.addEventListener('DOMContentLoaded', function() {
             checkSession();
             
-            // Security note
-            console.log('%c🔐 Admin Panel Security', 'color: #4361ee; font-size: 16px; font-weight: bold;');
-            console.log('%cPassword set to: h$megam@rt', 'color: green; font-weight: bold;');
-            console.log('%cKeep this password secure!', 'color: #dc3545;');
+            // Debug info
+            console.log('Admin Panel Loaded');
+            console.log('Correct Password:', CORRECT_PASSWORD);
+            console.log('Session status:', sessionStorage.getItem('adminAuthenticated'));
+            
+            // Password hint in console
+            console.log('%c🔐 Admin Password: Waheed', 'color: green; font-weight: bold; font-size: 16px;');
+            console.log('(Case-sensitive, no spaces)');
         });
+        
+        // Export functions for debugging
+        window.adminDebug = {
+            checkPassword: checkPassword,
+            getProducts: function() {
+                return JSON.parse(localStorage.getItem('shopEasyProducts')) || [];
+            },
+            clearProducts: function() {
+                localStorage.removeItem('shopEasyProducts');
+                return 'Products cleared';
+            }
+        };
     </script>
 </body>
 </html>
